@@ -13,11 +13,11 @@
 > python ruijielogin.py **-n** *<用户名>* **-p** *<密码>* **-id** *<运营商id>*
 
 ## 1.跑密码字典(file)
-> python ruijielogin.py **-n** *<用户名>* **-p** file:文件路径 **-id** *0*
+> python ruijielogin.py **-n** *<用户名>* **-p** `file:文件路径` **-id** *0*
 
 > 逐行读取,自动去除回车,登录成功后停止.
 
-> python ruijielogin.py -n** *2021* **-p** [file:/home/pi/rklin.txt](#) **-id** *0*
+> python ruijielogin.py **-n** *2021* **-p** [file:/home/pi/rklin.txt](#) **-id** *0*
 
 **/home/pi/rklin.txt内容**
 ``` lua
@@ -27,16 +27,16 @@ abcdefg
 ```
 
 ## 2.跑数字密码(run)
-> python ruijielogin.py **-n** *<用户名>* **-p** run:数字1-数字2 **-id** *<运营商id>*
+> python ruijielogin.py **-n** *<用户名>* **-p** `run:数字1-数字2` **-id** *<运营商id>*
 
 > 从数字1到数字2依次作为密码,`如果范围内有数字小于6位,自动在前面补够0`,登录成功后停止.
 
-> python ruijielogin.py -n** *2021* **-p** [run:10000-3199999](#) **-id** *0*
+> python ruijielogin.py **-n** *2021* **-p** [run:10000-3199999](#) **-id** *0*
 
 > 10000因为不足6位被识别为010000,同理 10=>000010
 
 ## 循环登录(设置执行间隔,会持续登录)
-> python ruijielogin.py **-n** *<用户名>* **-p** *<密码>* **-id** *<运营商id>* **-t** *<延迟时间秒>*
+> python ruijielogin.py **-n** *<用户名>* **-p** *<密码>* **-id** *<运营商id>* `-t <延迟时间秒>`
 
 > python ruijielogin.py **-n** *2021* **-p** *123456* **-id** *0* **-t** *30*
 
