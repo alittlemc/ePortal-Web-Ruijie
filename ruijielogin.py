@@ -2,39 +2,39 @@
 # -*-coding:utf-8-*-
 import sys
 import requests
-
+#from threading import Timer
+from time import sleep
 
 USERNAME = '-1'
 PASSWORD = '-1'
 SERVICE = r'0'
 OPENURL = r'http://www.google.cn/generate_204'
 ERR_STR = """
+       -h    显示帮助,输入此项后只输出提示.
 
+       -v    显示完整输出.
 
-       -h    显示帮助
+       -u [字符串 user]    *后面加用户名(必填).
 
-
-       -u    后面加用户名(必填)
-
-
-       -p    后面加密码(必填)
-            1)可以直接填写密码
-            #暴力破解注意事项# 跑密码建议请选择可以登录"校园网络"的接入点测试,或者请选择正确的运营商.
-            2)file:文件路径 可以实现跑弱口令,逐行读取.
-            3)run:数字1-数字2 从 数字1 跑到 数字2 结束,
+       -p [字符串 password]   *后面加密码(必填).
+             1)可以直接填写密码
+             #暴力破解注意事项# 跑密码建议请选择可以登录"校园网络"的接入点测试,或者请选择正确的运营商.
+             2)file:文件路径 可以实现跑弱口令,逐行读取.
+             3)run:数字1-数字2 从 数字1 跑到 数字2 结束,
                 (身份证后六位范围010000-319999).
 
+       -id [数字 0到1]  后面输入0-3 默认0,[
+             0="校园网络",
+             1="中国移动ChinaMobile",
+             2="中国电信ChinaTelecom",
+             3="中国联通ChinaUnicom"]
 
-       -v   显示完整输出
-
-
-       -id   0-3 默认0,[
-            0="校园网络",
-            1="中国移动ChinaMobile",
-            2="中国电信ChinaTelecom",
-            3="中国联通ChinaUnicom"]
+       -t  [数字 秒]  循环登录,会根据当前输入的账号密码反复执行,延时{time}秒.不可以和跑密码(file和run)同时使用.
+             停止请CRTL+C.
+        
+        https://github.io/alittlemc/ePortal-Web-Ruijie
+        version 1.3
 """
-
 
 def get_captive_server_response():
     return requests.get(OPENURL)
@@ -62,6 +62,10 @@ def start(code, response):
 
     SERVICE = id[id_i]
 
+    if "-t" in code:
+        t=int(code[code.index("-t")+1])
+    else:
+        t=0
     if "-p" in code:
         PASSWORD = code[code.index("-p")+1]
         i = 0
@@ -94,13 +98,21 @@ def start(code, response):
                         print(p+":\n"+re)
                 return '{\"result\":\"false\",\"message\",\"尝试'+str(i)+'次,没有匹配到密码\"}'
             except Exception as e:
-                print(e)
+                print(e, '95-lin')
 
         else:
-            return login(response, USERNAME, PASSWORD, SERVICE)
-
-    #print(USERNAME,PASSWORD,SERVICE)
-
+            if t>0:
+                i=1
+                while i:
+                    print("编号",i)
+                    #t = Timer(t, login, [response, USERNAME, PASSWORD, SERVICE])
+                    #t.start()
+                    print(login(response, USERNAME, PASSWORD, SERVICE))
+                    sleep(t)
+                    i+=1
+                #t.cancel()
+            else:
+                return login(response, USERNAME, PASSWORD, SERVICE)
 
 def login(response, USERNAME, PASSWORD, SERVICE):
     response_text = response.text
@@ -123,6 +135,7 @@ def login(response, USERNAME, PASSWORD, SERVICE):
         data=login_post_data,
         headers=headers
     )
+    
     return login_result.content.decode('utf-8')
 
 
@@ -137,5 +150,4 @@ if __name__ == '__main__':
             else:
                 print('当前已经可以连接网络,无需连接')
     except Exception as e:
-        print("#错误信息", e, "\n",)
-
+        print("#错误信息",e,"\n",)
