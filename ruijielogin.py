@@ -6,7 +6,7 @@ import requests
 #from threading import Timer
 from time import sleep
 #跳转的URL,每个人的每一个环境可能不一样,用于定义在不需要认证的情况下也可以发送登录报文
-URL = r'http://10.100.10.251/eportal/index.jsp?wlanuserip=822116b5f1fc86e85a512b5ff27e843c&wlanacname=c4f2fd6200d97669e67e88409950b214&ssid=&nasip=9a0225c89437df46244894fce5813368&snmpagentip=&mac=381c16491e79338e267db5328fcff5be&t=wireless-v2&url=709db9dc9ce334aa499e3ba894d61ed828cc26a37698124a1995f489db07278b886cddddfef679d5&apmac=&nasid=c4f2fd6200d97669e67e88409950b214&vid=e74b757aba6dfb57&port=b1c5f0c2c1680863&nasportid=f5eb983692924fa26e6431fe9df4835fab2721b75605c19e308847a5ef2043f7062ade9d5223d0c0'
+#URL = r'http://10.100.10.251/eportal/index.jsp?wlanuserip=822116b5f1fc86e85a512b5ff27e843c&wlanacname=c4f2fd6200d97669e67e88409950b214&ssid=&nasip=9a0225c89437df46244894fce5813368&snmpagentip=&mac=381c16491e79338e267db5328fcff5be&t=wireless-v2&url=709db9dc9ce334aa499e3ba894d61ed828cc26a37698124a1995f489db07278b886cddddfef679d5&apmac=&nasid=c4f2fd6200d97669e67e88409950b214&vid=e74b757aba6dfb57&port=b1c5f0c2c1680863&nasportid=f5eb983692924fa26e6431fe9df4835fab2721b75605c19e308847a5ef2043f7062ade9d5223d0c0'
 USERNAME = '-1'
 PASSWORD = '-1'
 SERVICE = r'0'
@@ -33,14 +33,14 @@ ERR_STR = """
 
        -t  [数字 秒]  循环登录,会根据当前输入的账号密码反复执行,延时{time}秒.不可以和跑密码(file和run)同时使用.
              停止请CRTL+C.
-             假如你已经登录,使用-t,会读取同目录下URL.txt文件来读取入网地址,请使用-URL参数生成,正常登录获取.
+             假如你已经登录,可能就无法使用-t,因为需要读取同目录下URL.txt文件来读取入网地址,请使用-URL参数生成,正常登录获取.
 
        -URL 1)使用此命令会自动保存入网地址到同目录下URL.txt文件,
-                2)如果此文件已经存在就忽略当前是否已经登录,直接用URL.txt的参数,每一个设备或接入点不同URL都不同,如果本地URL.txt发生变化请手动删除.
+                2)如果此文件已经存在就忽略当前是否已经登录,直接用URL.txt的参数,每一个设备或接入点不同URL都不同,如果本地URL.txt过时或者错误请手动删除.
                     3)如果你需要在已经登录情况下发包就必须先获取URl.txt.
 
         https://github.io/alittlemc/ePortal-Web-Ruijie
-        version 1.3
+        version 1.31
 """
 
 def get_captive_server_response():
