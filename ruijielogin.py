@@ -39,7 +39,7 @@ ERR_STR = """
                 2)如果此文件已经存在就忽略当前是否已经登录,直接用URL.txt的参数,每一个设备或接入点不同URL都不同,如果本地URL.txt过时或者错误请手动删除.
                     3)如果你需要在已经登录情况下发包就必须先获取URl.txt.
 
-        https://github.io/alittlemc/ePortal-Web-Ruijie
+        https://github.com/alittlemc/ePortal-Web-Ruijie
         version 1.31
 """
 
